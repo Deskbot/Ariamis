@@ -18,15 +18,17 @@
   },
 
   "main": "dist/index.js",
-  "types": "./dist",
+  "module": "dist/index.js",
+  "types": "dist",
   "files": [
-    "./dist/**.js",
-    "./dist/**.d.ts"
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
   ],
 
   "scripts": {
     "build": "npx tsc -i",
-    "prepublishOnly": "npm run build"
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build"
   },
 
   "devDependencies": {

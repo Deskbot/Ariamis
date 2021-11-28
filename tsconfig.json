@@ -8,7 +8,6 @@
         "module": "ESNext",
         "noImplicitReturns": true,
         "outDir": "dist",
-        "sourceMap": true,
         "strict": true,
         "target": "ES2020"
     },
