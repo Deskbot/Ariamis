@@ -1,0 +1,24 @@
+{
+  "name": "ariamis",
+  "version": "0.0.0",
+  "description": "A small and beautiful DOM creation library.",
+  "keywords": ["dom"],
+  "license": "Zlib",
+  "author": "Thomas Richards",
+
+  "homepage": "https://github.com/Deskbot/Ariamis#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Deskbot/Ariamis.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Deskbot/Ariamis/issues"
+  },
+
+  "main": "dist/index.js",
+  "types": "./dist",
+
+  "scripts": {
+    "build": "npx tsc -i"
+  }
+}
