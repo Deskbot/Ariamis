@@ -50,8 +50,8 @@ input({ type: "text", name: "address" })
 
 // only children
 ul([
-    li(["hello"])
-    li(["world"])
+    li(["hello"]),
+    li(["world"]),
 ])
 
 // only listeners (attributes is required when listeners is provided to avoid ambiguity)
@@ -95,7 +95,7 @@ import { fragment, a } from "ariamis"
 
 fragment([
     a({ href: "https://example.com" }),
-    p(["Lorem ipsum"])
+    p(["Lorem ipsum"]),
 ])
 ```
 
@@ -124,7 +124,7 @@ Ariamis can avoid duplication when the key and value have the same name:
 
 ```tsx
 <input value={value}/>
-// vs
+
 input({ value })
 ```
 
