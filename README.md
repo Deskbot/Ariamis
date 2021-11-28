@@ -2,9 +2,9 @@
 
 Ariamis is a small and beautiful DOM creation library.
 
-Ariamis is a thin API over native DOM code for constructing DOM elements. It wraps up what could be several DOM API calls into a single function for constructing an element. This allows DOM hierarchy to be constructed declaratively by creating a parent element and passing it child nodes in a single expression.
+Ariamis is a thin abstraction over native browser APIs for constructing elements. It wraps up what would be multiple lines of browser API calls into a single function. With Ariamis, the DOM to be defined declaratively by constructing the DOM tree and giving each element specific attributes and event listeners, all in a single expression.
 
-Ariamis leverages TypeScript to check that your DOM creation is valid.
+Ariamis leverages TypeScript to check that your DOM creation is valid and give hints to your IDE.
 
 ## Installation
 
@@ -12,11 +12,18 @@ Ariamis leverages TypeScript to check that your DOM creation is valid.
 npm install ariamis
 ```
 
+<!--After the Linus Tech Tips 'Linux Challenge', I feel the need to include this.-->
+(Ariamis in an [NPM](https://www.npmjs.com) package. Type the above command into your terminal emulator.)
+
 ## Examples
 
 ### Elements
 
-Create a button with attributes and `type="button"`, an event handler listening for the `click` event, and a child text node that says `"Click Me"`.
+The following creates a button with:
+
+* attribute `type="button"`,
+* an event handler listening for the `click` event,
+* and a child text node that says `"Click Me"`.
 
 ```ts
 import { button } from "ariamis"
@@ -66,6 +73,9 @@ button({ className: "big-button red-button" })
 // HTML: <label for="input-id">
 label({ htmlFor: "input-id" })
 
+// HTML: <div aria-label="button">
+div({ ariaLabel: "button" })
+
 // HTML: <div data-hello="world">
 div({ dataset: { hello: "world" } })
 ```
@@ -104,7 +114,7 @@ console.log(s.childNodes[0].constructor.name) // HTMLParagraphElement
 
 ## Why not JSX?
 
-Whether Ariamis is more aesthetically pleasing than JSX is a matter of taste.
+Whether Ariamis is more aesthetically pleasing than JSX is a matter of subjective taste.
 
 JSX can be used with libraries like React and Solid, but Ariamis can not.
 
@@ -129,6 +139,10 @@ ul({ className: cls, id: myId },
     lines.map(line => li([line]))
 )
 ```
+
+## Web Components
+
+The current Ariamis API can probably be used to construct web components. However, the type checking will not consider it valid.
 
 ## Name
 
