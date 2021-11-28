@@ -1,5 +1,5 @@
 /**
- * A DOM Node or a string, both of which are valid arguments to the normal DOM API
+ * A DOM Node or a string that will become a text node. A lot of DOM API methods naturally take this type.
  */
 export type Dom = Node | string
 
