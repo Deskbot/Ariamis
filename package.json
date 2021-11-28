@@ -2,7 +2,9 @@
   "name": "ariamis",
   "version": "0.0.0",
   "description": "A small and beautiful DOM creation library.",
-  "keywords": ["dom"],
+  "keywords": [
+    "dom"
+  ],
   "license": "Zlib",
   "author": "Thomas Richards",
 
@@ -19,6 +21,11 @@
   "types": "./dist",
 
   "scripts": {
-    "build": "npx tsc -i"
+    "build": "npx tsc -i",
+    "prepublishOnly": "npm run build"
+  },
+
+  "devDependencies": {
+    "typescript": "^4.5.2"
   }
 }
