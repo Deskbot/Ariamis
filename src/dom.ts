@@ -162,31 +162,39 @@ function createElem<T extends Tag, E extends EventName>(
  * This tag type is baked into the function and isn't chosen by an argument.
  */
 export type TagFunc<T extends Tag> = {
+    /**
+     * Creates an element
+     */
     (): Elem<T>
 
     /**
+     * Creates an element
      * @param children The child nodes of the element
      */
     (children: Children): Elem<T>
 
     /**
+     * Creates an element
      * @param attrs Element attributes as an object of attribute names to values
      */
     (attrs: Attrs<T>): Elem<T>
 
     /**
+     * Creates an element
      * @param attrs Element attributes as an object of attribute names to values
      * @param children The child nodes of the element
      */
     (attrs: Attrs<T>, children: Children): Elem<T>
 
     /**
+     * Creates an element
      * @param attrs Element attributes as an object of attribute names to values
      * @param listeners Event listeners attached to the element as an object of event names to handlers
      */
     <E extends EventName>(attrs: Attrs<T>, listeners: Listeners<T, E>): Elem<T>
 
     /**
+     * Creates an element
      * @param attrs Element attributes as an object of attribute names to values
      * @param listeners Event listeners attached to the element as an object of event names to handlers
      * @param children The child nodes of the element
