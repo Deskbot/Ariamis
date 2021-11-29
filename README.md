@@ -109,7 +109,7 @@ import { rawHtml } from "ariamis"
 const dom = rawHtml("<p>Do you like being hacked?</p>")
 
 console.log(dom.constructor.name) // DocumentFragment
-console.log(s.childNodes[0].constructor.name) // HTMLParagraphElement
+console.log(dom.childNodes[0].constructor.name) // HTMLParagraphElement
 ```
 
 ## Why not JSX?
@@ -135,7 +135,7 @@ Ariamis usually has less bracketing. It's nice not having to wrap JavaScript in 
     {lines.map(line => <li>{line}</li>)}
 </ul>
 
-ul({ className: cls, id: myId },
+ul({ className: myClass, id: myId },
     lines.map(line => li([line]))
 )
 ```
