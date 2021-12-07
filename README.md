@@ -131,13 +131,26 @@ input({ value })
 Ariamis usually has less bracketing. It's nice not having to wrap JavaScript in curly braces.
 
 ```tsx
-<ul className={myClass} id={myId}>
+<ul className={myClass} id={myId} {...props}>
     {lines.map(line => <li>{line}</li>)}
 </ul>
 
-ul({ className: myClass, id: myId },
+ul({ className: myClass, id: myId, ...props },
     lines.map(line => li([line]))
 )
+```
+
+Ariamis only has one object syntax.
+
+```tsx
+// some higher order component implemented in some way
+function MySelectComponent({ color, optionProps }) {
+    // ...
+}
+
+<MySelectComponent color="primary" optionProps={{ color: "primary" }}/>
+
+MySelectComponent({ color: "primary", optionProps: { color: "primary" } })
 ```
 
 ## Web Components
