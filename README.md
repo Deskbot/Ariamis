@@ -2,7 +2,7 @@
 
 Ariamis is a small and beautiful DOM creation library.
 
-Ariamis is a thin abstraction over native browser APIs for constructing elements. It wraps up what would be multiple lines of browser API calls into a single function. With Ariamis, the DOM to be defined declaratively by constructing the DOM tree and giving each element specific attributes and event listeners, all in a single expression.
+Ariamis is a thin abstraction over native browser APIs for constructing elements. It wraps up what would be multiple lines of browser API calls into a single function. With Ariamis, DOM can be defined declaratively; you can construct a DOM tree and give each element specific attributes and event listeners all in a single expression.
 
 Ariamis leverages TypeScript to check that your DOM creation is valid and give hints to your IDE.
 
