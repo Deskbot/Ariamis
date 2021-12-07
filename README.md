@@ -120,7 +120,9 @@ JSX can be used with libraries like React and Solid, but Ariamis can not.
 
 These are some advantages I think Ariamis has:
 
-Ariamis can avoid duplication when the key and value have the same name:
+### No extra build step.
+
+### Ariamis can avoid duplication when the key and value have the same name:
 
 ```tsx
 <input value={value}/>
@@ -128,7 +130,9 @@ Ariamis can avoid duplication when the key and value have the same name:
 input({ value })
 ```
 
-Ariamis usually has less bracketing. It's nice not having to wrap JavaScript in curly braces.
+### Ariamis usually has less bracketing.
+
+It's nice not having to wrap JavaScript in curly braces.
 
 ```tsx
 <ul className={myClass} id={myId} {...props}>
@@ -140,7 +144,7 @@ ul({ className: myClass, id: myId, ...props },
 )
 ```
 
-Ariamis only has one object syntax.
+### Ariamis only has one object syntax.
 
 ```tsx
 // some higher order component implemented in some way
