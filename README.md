@@ -13,7 +13,14 @@ npm install ariamis
 ```
 
 <!--After the Linus Tech Tips 'Linux Challenge', I feel the need to include this.-->
-(Ariamis in an [NPM](https://www.npmjs.com) package. Type the above command into your terminal emulator.)
+Ariamis is an [NPM](https://www.npmjs.com) package.
+
+NPM packages can be imported into the browser. However, please note:
+
+* NodeJS-style bare imports aren't supported by browsers. (i.e. `import * as ariamis from "ariamis"`) (a bare import is one that doesn't start with "./" or "/")
+* Generally a transpiler like Babel is used in combination with build tools like Webpack or Rollup to replace bare imports with real paths (and do other useful things).
+* Ariamis, installed through NPM, can be imported in the browser by using a relative/absolute path to your `node_modules/ariamis/dist/index`. Ariamis itself doesn't contain bare imports.
+* Browsers may eventually get a feature called ['import maps'](https://github.com/WICG/import-maps) that tells the browser what path to use when it encounters a bare import.
 
 ## Examples
 
