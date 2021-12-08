@@ -123,11 +123,11 @@ console.log(dom.childNodes[0].constructor.name) // HTMLParagraphElement
 
 Whether Ariamis is more aesthetically pleasing than JSX is a matter of subjective taste.
 
-JSX can be used with libraries like React and Solid, but Ariamis can not.
+JSX can be understood by libraries like React and Solid, but Ariamis can not.
 
 These are some advantages I think Ariamis has:
 
-### No extra build step.
+### No extra build step
 
 ### Ariamis can avoid duplication when the key and value have the same name:
 
@@ -137,7 +137,7 @@ These are some advantages I think Ariamis has:
 input({ value })
 ```
 
-### Ariamis usually has less bracketing.
+### Ariamis usually has less bracketing:
 
 It's nice not having to wrap JavaScript in curly braces.
 
@@ -151,7 +151,7 @@ ul({ className: myClass, id: myId, ...props },
 )
 ```
 
-### Ariamis only has one object syntax.
+### Ariamis has only one object syntax:
 
 ```tsx
 // some higher order component implemented in some way
