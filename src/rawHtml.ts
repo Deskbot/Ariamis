@@ -3,7 +3,7 @@
  */
 export function rawHtml(html: string) {
     const elem = document.createElement("div")
-    elem.innerHTML = html
+    elem.innerHTML = html.trim()
 
     const frag = document.createDocumentFragment()
 
