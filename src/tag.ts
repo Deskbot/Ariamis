@@ -1,4 +1,4 @@
-import { tag } from "./dom"
+import { tag } from "./elem"
 
 export const a = tag("a")
 export const abbr = tag("abbr")
