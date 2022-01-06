@@ -45,25 +45,17 @@ export type ElemCreator<T extends Tag> = {
     <E extends EventName>(tag: T, attrs: Attrs<T>, listeners: Listeners<T, E>, children: Children): Elem<T>
 }
 
-/**
- * Creates an element.
- * Takes a tag name, optionally followed by any of:
- * * children
- * * attributes
- * * attributes, children
- * * attributes, listeners
- * * attributes, listeners, children
- */
-export const elem = createElem as ElemCreator<Tag>
+export type ElemParams<T extends Tag, E extends EventName> = readonly [
+    attrs: Attrs<T>,
+    listeners: Listeners<T, E>,
+    children: Children,
+]
 
-function createElem<T extends Tag, E extends EventName>(
-    tag: T,
+export function disambiguateElemParams<T extends Tag, E extends EventName>(
     arg1?: Children | Attrs<T>,
     arg2?: Children | Listeners<T, E>,
     arg3?: Children,
-): Elem<T> {
-    // disambiguate arguments
-
+): ElemParams<T, E> {
     let attr: Attrs<T> = {}
     let listeners: Listeners<T, E> = {}
     let children: Children = []
@@ -84,13 +76,20 @@ function createElem<T extends Tag, E extends EventName>(
         children = arg3
     }
 
-    // build the element
+    return [attr, listeners, children] as const
+}
 
+export function createElement<T extends Tag, E extends EventName>(
+    tag: T,
+    attrs: Attrs<T>,
+    listeners: Listeners<T, E>,
+    children: Children,
+): Elem<T> {
     const elem = document.createElement(tag)
 
-    for (const key in attr) {
+    for (const key in attrs) {
         // TypeScript complains without this cast. I think this situation is just too complicated for it.
-        elem[key] = attr[key] as Elem<T>[Extract<keyof Elem<T>, string>]
+        elem[key] = attrs[key] as Elem<T>[Extract<keyof Elem<T>, string>]
     }
 
     for (const k in listeners) {
@@ -106,6 +105,24 @@ function createElem<T extends Tag, E extends EventName>(
     elem.append(...children)
 
     return elem
+}
+
+/**
+ * Creates an element.
+ * Takes a tag name, optionally followed by any of the following sequences:
+ * * children
+ * * attributes
+ * * attributes, children
+ * * attributes, listeners
+ * * attributes, listeners, children
+ */
+export function elem<T extends Tag, E extends EventName>(
+    tag: T,
+    arg1?: Children | Attrs<T>,
+    arg2?: Children | Listeners<T, E>,
+    arg3?: Children,
+): Elem<T> {
+    return createElement(tag, ...disambiguateElemParams(arg1, arg2, arg3))
 }
 
 /**
@@ -158,5 +175,5 @@ export type TagFunc<T extends Tag> = {
  * i.e. it creates an element creating function with the given tag name baked in.
  */
 export function tag<T extends Tag>(tag: T): TagFunc<T> {
-    return ((...args: any) => (elem as any)(tag, ...args))
+    return ((...args: any) => elem(tag, ...args))
 }
