@@ -119,18 +119,19 @@ console.log(dom.constructor.name) // DocumentFragment
 console.log(dom.childNodes[0].constructor.name) // HTMLParagraphElement
 ```
 
-### Custom Ariamis-like Functions
+### Custom Element Creator Functions
 
 If you want a component with an API similar to an Ariamis function, you can do the following:
-
 ```ts
 function ThemedParagraph(...args: ElemArgs<"p">): HTMLParagraphElement {
-    const [attrs, listeners, children] = disambiguateElemArgs(...args)
+    const elem = createElement("p", ...distinguishElemArgs(args))
 
-    attrs.classList.push("themed-paragraph")
+    elem.classList.add("themed-paragraph")
 
-    return createElement("p", attrs, listeners, children)
+    return elem
 }
+
+// distinguishElemArgs takes ElemArgs and returns ElemArgsAll
 ```
 
 ## Why not JSX?

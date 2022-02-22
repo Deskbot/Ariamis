@@ -51,17 +51,15 @@ export type ElemArgs<T extends Tag, E extends EventName = EventName> = [
     arg3?: Children,
 ]
 
-export type CreateElementArgs<T extends Tag, E extends EventName = EventName> = [
+export type ElemArgsAll<T extends Tag, E extends EventName = EventName> = [
     attrs: Attrs<T>,
     listeners: Listeners<T, E>,
     children: Children,
 ]
 
-export function disambiguateElemArgs<T extends Tag, E extends EventName>(
-    arg1?: Children | Attrs<T>,
-    arg2?: Children | Listeners<T, E>,
-    arg3?: Children,
-): CreateElementArgs<T, E>
+export function distinguishElemArgs
+    <T extends Tag, E extends EventName>
+    ([arg1, arg2, arg3]: ElemArgs<T,E>): ElemArgsAll<T, E>
 {
     let attr: Attrs<T> = {}
     let listeners: Listeners<T, E> = {}
@@ -83,7 +81,7 @@ export function disambiguateElemArgs<T extends Tag, E extends EventName>(
         children = arg3
     }
 
-    return [attr, listeners, children] as CreateElementArgs<T, E>
+    return [attr, listeners, children] as ElemArgsAll<T, E>
 }
 
 export function createElement<T extends Tag, E extends EventName>(
@@ -123,13 +121,8 @@ export function createElement<T extends Tag, E extends EventName>(
  * * attributes, listeners
  * * attributes, listeners, children
  */
-export function elem<T extends Tag, E extends EventName>(
-    tag: T,
-    arg1?: Children | Attrs<T>,
-    arg2?: Children | Listeners<T, E>,
-    arg3?: Children,
-): Elem<T> {
-    return createElement(tag, ...disambiguateElemArgs(arg1, arg2, arg3))
+export function elem<T extends Tag, E extends EventName>(tag: T, ...elemArgs: ElemArgs<T,E>): Elem<T> {
+    return createElement(tag, ...distinguishElemArgs(elemArgs))
 }
 
 /**
