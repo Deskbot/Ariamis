@@ -59,11 +59,32 @@ export type ElemArgsAll<T extends Tag, E extends EventName = EventName> = [
 
 export function distinguishElemArgs
     <T extends Tag, E extends EventName>
-    ([arg1, arg2, arg3]: ElemArgs<T,E>): ElemArgsAll<T, E>
+    ([arg1, arg2, arg3]: ElemArgs<T, E>): ElemArgsAll<T, E>
 {
-    let attr: Attrs<T> = {}
-    let listeners: Listeners<T, E> = {}
-    let children: Children = []
+    return distinguishAriamisArgs<
+        Attrs<T>,
+        Listeners<T,E>,
+        Children,
+        Children | Attrs <T>,
+        Children | Listeners<T, E>,
+        Children
+    >([arg1, arg2, arg3])
+}
+
+export function distinguishAriamisArgs
+    <
+        A extends object,
+        L extends object,
+        C extends unknown[],
+        Arg1 extends C | A,
+        Arg2 extends C | L,
+        Arg3 extends C,
+    >
+    ([arg1, arg2, arg3]: [Arg1 | undefined, Arg2 | undefined, Arg3 | undefined]): [A, L, C]
+{
+    let attr = {}
+    let listeners = {}
+    let children = [] as unknown[]
 
     if (Array.isArray(arg1)) {
         children = arg1
@@ -81,7 +102,7 @@ export function distinguishElemArgs
         children = arg3
     }
 
-    return [attr, listeners, children] as ElemArgsAll<T, E>
+    return [attr as A, listeners as L, children as C]
 }
 
 export function createElement<T extends Tag, E extends EventName>(
