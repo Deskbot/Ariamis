@@ -119,11 +119,13 @@ console.log(dom.constructor.name) // DocumentFragment
 console.log(dom.childNodes[0].constructor.name) // HTMLParagraphElement
 ```
 
-### Custom Element Creator Functions
+### Custom Element Creators
 
-If you want a component with an API similar to an Ariamis function, you can do the following:
+Example of a component with the same API as an Ariamis tag function with some baked in extra functionality:
+
 ```ts
 function ThemedParagraph(...args: ElemArgs<"p">): HTMLParagraphElement {
+    // distinguishElemArgs takes ElemArgs and returns ElemArgsAll
     const elem = createElement("p", ...distinguishElemArgs(args))
 
     elem.classList.add("themed-paragraph")
@@ -131,7 +133,62 @@ function ThemedParagraph(...args: ElemArgs<"p">): HTMLParagraphElement {
     return elem
 }
 
-// distinguishElemArgs takes ElemArgs and returns ElemArgsAll
+```
+
+Example of how to create a function with a similar API to the Ariamis `elem` function, but with a custom type for attributes, listeners, or children:
+
+```ts
+// We want to write our own function similar to `elem`,
+// except instead of using Attrs<T>, we will use ObservableAttrs<Attrs<T>>.
+// The idea is that this function will create elements,
+// whose attribute values will be automatically changed, when the observed attribute value is changed.
+
+// Example type that some library might use for observables.
+type Observable<T> = {
+    getValue(): T
+    onChange(handler: (newVal: T) => void): void
+}
+
+type ObservableAttrs<A> = {
+    [K in keyof A]: Observable<A[K]>
+}
+
+function observerElem<T extends Tag, E extends EventName>(
+    tag: T,
+    arg1?: Children | ObservableAttrs<Attrs<T>>,
+    arg2?: Children | Listeners<T, E>,
+    arg3?: Children,
+): Elem<T> {
+    // Use distinguishAriamisArgs to figure out which argument to the function is which.
+    // Tell distinguishAriamisArgs what types we expect the attributes, listeners, and children to be.
+    const [observableAttrs, listeners, children] = distinguishAriamisArgs<
+        ObservableAttrs<Attrs<T>>,
+        Listeners<T, E>,
+        Children
+    >([arg1, arg2, arg3])
+
+    // Build the attrs as needed by Ariamis.
+    const attrs: Attrs<T> = {}
+    for (const key in observableAttrs) {
+        const observable = observableAttrs[key];
+        (attrs as any)[key] = observable.getValue()
+    }
+
+    // Create the element with Ariamis.
+    const elem = createElement(tag, attrs, listeners, children)
+
+    // Update the element when the observed value changes.
+    for (const key in observableAttrs) {
+        const observable = observableAttrs[key]
+
+        observable.onChange((newVal) => {
+            elem[key] = newVal as any
+        })
+    }
+
+    return elem
+}
+
 ```
 
 ## Why not JSX?
