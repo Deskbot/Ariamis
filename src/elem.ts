@@ -49,7 +49,7 @@ export type ElemCreator<T extends Tag> = {
  * The arguments to the `elem` function (except the tag name),
  * which are designed for ease of use and need to be disambiguated by ariamis.
  */
-export type ElemArgs<T extends Tag, E extends EventName = EventName> = [
+export type ElemArgs<T extends Tag, E extends EventName = EventName> = readonly [
     arg1?: Children | Attrs<T>,
     arg2?: Children | Listeners<T, E>,
     arg3?: Children,
@@ -59,12 +59,16 @@ export type ElemArgs<T extends Tag, E extends EventName = EventName> = [
  * The arguments to the `createElement` function (except the tag name).
  * Each possible part of the element is included.
  */
-export type ElemArgsAll<T extends Tag, E extends EventName = EventName> = [
+export type ElemArgsAll<T extends Tag, E extends EventName = EventName> = readonly [
     attrs: Attrs<T>,
     listeners: Listeners<T, E>,
     children: Children,
 ]
 
+/**
+ * Takes the ambiguous arguments that you might give to `elem` or a tag function
+ * and figures out what their types are.
+ */
 export function distinguishElemArgs
     <T extends Tag, E extends EventName>
     ([arg1, arg2, arg3]: ElemArgs<T, E>): ElemArgsAll<T, E>
@@ -79,6 +83,14 @@ export function distinguishElemArgs
     >([arg1, arg2, arg3])
 }
 
+/**
+ * A more general version of `distinguishElemArgs`.
+ * It lets you use custom types for attributes, listeners, and children and disambiguate them.
+ * It assumes the same argument order of ariamis's element creation functions.
+ * It assumes the same arguments can be omitted in the same circumstances.
+ * It expects attributes and listeners to be objects.
+ * It expects the children to be an array.
+ */
 export function distinguishAriamisArgs
     <
         Arg1 extends C | A,
@@ -88,7 +100,7 @@ export function distinguishAriamisArgs
         L extends object,
         C extends unknown[],
     >
-    ([arg1, arg2, arg3]: [Arg1 | undefined, Arg2 | undefined, Arg3 | undefined]): [A, L, C]
+    ([arg1, arg2, arg3]: readonly [Arg1 | undefined, Arg2 | undefined, Arg3 | undefined]): [A, L, C]
 {
     let attr = {}
     let listeners = {}
@@ -113,6 +125,9 @@ export function distinguishAriamisArgs
     return [attr as A, listeners as L, children as C]
 }
 
+/**
+ * Creates an element. All aspects of the element must be provided.
+ */
 export function createElement<T extends Tag, E extends EventName>(
     tag: T,
     attrs: Attrs<T>,
