@@ -45,12 +45,20 @@ export type ElemCreator<T extends Tag> = {
     <E extends EventName>(tag: T, attrs: Attrs<T>, listeners: Listeners<T, E>, children: Children): Elem<T>
 }
 
+/**
+ * The arguments to the `elem` function (except the tag name),
+ * which are designed for ease of use and need to be disambiguated by ariamis.
+ */
 export type ElemArgs<T extends Tag, E extends EventName = EventName> = [
     arg1?: Children | Attrs<T>,
     arg2?: Children | Listeners<T, E>,
     arg3?: Children,
 ]
 
+/**
+ * The arguments to the `createElement` function (except the tag name).
+ * Each possible part of the element is included.
+ */
 export type ElemArgsAll<T extends Tag, E extends EventName = EventName> = [
     attrs: Attrs<T>,
     listeners: Listeners<T, E>,
