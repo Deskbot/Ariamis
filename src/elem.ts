@@ -45,25 +45,60 @@ export type ElemCreator<T extends Tag> = {
     <E extends EventName>(tag: T, attrs: Attrs<T>, listeners: Listeners<T, E>, children: Children): Elem<T>
 }
 
-export type ElemArgs<T extends Tag, E extends EventName = EventName> = [
+/**
+ * The arguments to the `elem` function (except the tag name),
+ * which are designed for ease of use and need to be disambiguated by ariamis.
+ */
+export type ElemArgs<T extends Tag, E extends EventName = EventName> = readonly [
     arg1?: Children | Attrs<T>,
     arg2?: Children | Listeners<T, E>,
     arg3?: Children,
 ]
 
-export type ElemArgsAll<T extends Tag, E extends EventName = EventName> = [
+/**
+ * The arguments to the `createElement` function (except the tag name).
+ * Each possible part of the element is included.
+ */
+export type ElemArgsAll<T extends Tag, E extends EventName = EventName> = readonly [
     attrs: Attrs<T>,
     listeners: Listeners<T, E>,
     children: Children,
 ]
 
+/**
+ * Takes the ambiguous arguments that you might give to `elem` or a tag function
+ * and figures out what their types are.
+ */
 export function distinguishElemArgs
     <T extends Tag, E extends EventName>
-    ([arg1, arg2, arg3]: ElemArgs<T,E>): ElemArgsAll<T, E>
+    ([arg1, arg2, arg3]: ElemArgs<T, E>): ElemArgsAll<T, E>
 {
-    let attr: Attrs<T> = {}
-    let listeners: Listeners<T, E> = {}
-    let children: Children = []
+    return distinguishAriamisArgs<
+        Attrs<T>,
+        Listeners<T,E>,
+        Children
+    >([arg1, arg2, arg3])
+}
+
+/**
+ * A more general version of `distinguishElemArgs`.
+ * It lets you use custom types for attributes, listeners, and children and disambiguate them.
+ * It assumes the same argument order of ariamis's element creation functions.
+ * It assumes the same arguments can be omitted in the same circumstances.
+ * It expects attributes and listeners to be objects.
+ * It expects the children to be an array.
+ */
+export function distinguishAriamisArgs
+    <
+        A extends object,
+        L extends object,
+        C extends unknown[],
+    >
+    ([arg1, arg2, arg3]: readonly [C | A | undefined, C | L | undefined, C | undefined]): [A, L, C]
+{
+    let attr = {}
+    let listeners = {}
+    let children = [] as unknown[]
 
     if (Array.isArray(arg1)) {
         children = arg1
@@ -81,9 +116,12 @@ export function distinguishElemArgs
         children = arg3
     }
 
-    return [attr, listeners, children] as ElemArgsAll<T, E>
+    return [attr as A, listeners as L, children as C]
 }
 
+/**
+ * Creates an element. All aspects of the element must be provided.
+ */
 export function createElement<T extends Tag, E extends EventName>(
     tag: T,
     attrs: Attrs<T>,
