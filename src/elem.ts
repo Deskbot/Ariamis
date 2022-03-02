@@ -74,9 +74,6 @@ export function distinguishElemArgs
     ([arg1, arg2, arg3]: ElemArgs<T, E>): ElemArgsAll<T, E>
 {
     return distinguishAriamisArgs<
-        Children | Attrs <T>,
-        Children | Listeners<T, E>,
-        Children,
         Attrs<T>,
         Listeners<T,E>,
         Children
@@ -93,14 +90,11 @@ export function distinguishElemArgs
  */
 export function distinguishAriamisArgs
     <
-        Arg1 extends C | A,
-        Arg2 extends C | L,
-        Arg3 extends C,
         A extends object,
         L extends object,
         C extends unknown[],
     >
-    ([arg1, arg2, arg3]: readonly [Arg1 | undefined, Arg2 | undefined, Arg3 | undefined]): [A, L, C]
+    ([arg1, arg2, arg3]: readonly [C | A | undefined, C | L | undefined, C | undefined]): [A, L, C]
 {
     let attr = {}
     let listeners = {}
