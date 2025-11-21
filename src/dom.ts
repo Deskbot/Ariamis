@@ -6,13 +6,12 @@ export type Dom = Node | string
 /**
  * The set of all tag names
  */
-export type Tag = keyof HTMLElementTagNameMap
+export type Tag = keyof HTMLElementTagNameMap | keyof HTMLElementDeprecatedTagNameMap
 
 /**
  * The type of the element with the given tag name
  */
-export type Elem<T extends Tag> = HTMLElementTagNameMap[T]
-
+export type Elem<T extends Tag> = (HTMLElementTagNameMap & HTMLElementDeprecatedTagNameMap)[T]
 /**
  * An object that can contain any of the possible attributes of an element with the given tag.
  */
