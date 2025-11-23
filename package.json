@@ -7,7 +7,6 @@
   ],
   "license": "Zlib",
   "author": "Thomas Richards",
-
   "homepage": "https://github.com/Deskbot/Ariamis#readme",
   "repository": {
     "type": "git",
@@ -16,7 +15,6 @@
   "bugs": {
     "url": "https://github.com/Deskbot/Ariamis/issues"
   },
-
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist",
@@ -24,14 +22,12 @@
     "dist/**/*.js",
     "dist/**/*.d.ts"
   ],
-
   "scripts": {
     "build": "npx tsc -i",
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run clean && npm run build"
   },
-
   "devDependencies": {
-    "typescript": "^4.5.2"
+    "typescript": "^5.9.3"
   }
 }
