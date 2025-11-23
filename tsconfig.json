@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "declaration": true,
+        "exactOptionalPropertyTypes": true,
         "lib": [
             "DOM",
             "ESNext"

@@ -128,11 +128,12 @@ export function createElement<T extends Tag, E extends EventName>(
     listeners: Listeners<T, E>,
     children: Children,
 ): Elem<T> {
-    const elem = document.createElement(tag)
+    const elem = document.createElement(tag) as Elem<T>
 
     for (const key in attrs) {
-        // TypeScript complains without this cast. I think this situation is just too complicated for it.
-        elem[key] = attrs[key] as Elem<T>[Extract<keyof Elem<T>, string>]
+        // because attributes is a partial object, undefined could be the value of any given key
+        // assume the user doesn't do that, effect if they do is minimal
+        elem[key] = attrs[key]!
     }
 
     for (const k in listeners) {

@@ -15,7 +15,7 @@ export type Elem<T extends Tag> = (HTMLElementTagNameMap & HTMLElementDeprecated
 /**
  * An object that can contain any of the possible attributes of an element with the given tag.
  */
-export type Attrs<T extends Tag> = Partial<Elem<T>> & object
+export type Attrs<T extends Tag> = Partial<Elem<T> & object>
 
 /**
  * A list of children can be represented as a list of nodes or HTML strings.
