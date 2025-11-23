@@ -141,3 +141,5 @@ export const spacer = tag("spacer")
 export const strike = tag("strike")
 export const tt = tag("tt")
 export const xmp = tag("xmp")
+
+export { variable as var }
